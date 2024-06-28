@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sprint-apps-helm
+  namespace: argocd
+spec:
+  project: spring-apps
+  source:
+    repoURL: https://github.com/xczdev/DemoHelmChart.git
+    targetRevision: HEAD
+    path: .
+    helm:
+      releaseName: helmargo
+      valueFiles:
+        - values.yaml
+        - dev-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: spring-apps-dev
